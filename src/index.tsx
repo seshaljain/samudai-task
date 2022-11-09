@@ -15,3 +15,9 @@ root.render(
     </Provider>
   </React.StrictMode>
 )
+
+declare global {
+  interface Window {
+    ethereum?: any
+  }
+}
