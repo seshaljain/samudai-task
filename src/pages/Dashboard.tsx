@@ -1,7 +1,12 @@
 import React from 'react'
+import Layout from '../components/Layout'
 
 function Dashboard() {
-  return <div>This is the Dashboard Page.</div>
+  return (
+    <Layout>
+      <div>This is the Dashboard Page.</div>
+    </Layout>
+  )
 }
 
 export default Dashboard
