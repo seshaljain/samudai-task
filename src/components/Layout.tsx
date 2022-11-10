@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
+import { useAppSelector } from '../app/hooks'
 
-const Layout = ({ children }: any) => {
+const Layout = ({ title, children }: any) => {
+  const user = useAppSelector((state) => state.auth)
   return (
     <>
       <main className="min-h-screen bg-green-50">
@@ -30,6 +32,13 @@ const Layout = ({ children }: any) => {
           </div>
         </nav>
         <div className="max-w-6xl p-4 mx-auto mt-6 bg-white rounded shadow">
+          <header className="flex items-center justify-between">
+            <h1 className="text-2xl font-bold">{title}</h1>
+            <span className="px-3 py-2 text-sm bg-gray-200 rounded-full">
+              Hi, {user.data?.address}
+            </span>
+          </header>
+          <hr className="my-4 bg-gray-100" />
           {children}
         </div>
       </main>
