@@ -1,28 +1,39 @@
 import { Link } from 'react-router-dom'
 import { ethers } from 'ethers'
-import { useSelector, useDispatch } from 'react-redux'
+import { SiweMessage } from 'siwe'
+import { useAppSelector, useAppDispatch } from '../app/hooks'
 
-import { RootState } from '../app/store'
 import { save } from '../features/auth/authSlice'
 
 const Home = () => {
-  const user = useSelector((state: RootState) => state.auth)
-  const dispatch = useDispatch()
+  const user = useAppSelector((state) => state.auth)
+  const dispatch = useAppDispatch()
 
-  const requestAccount = async () => {
-    if (window.ethereum) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
-      await provider.send('eth_requestAccounts', [])
-      const signer = provider.getSigner()
-      const address = await signer.getAddress()
-      dispatch(
-        save({
-          address,
-        })
+  const createSiweMessage = async (address: string, statement: string) => {
+    const domain = '0.0.0.0'
+    const origin = window.location.origin
+    const message = new SiweMessage({
+      domain,
+      address,
+      statement,
+      uri: origin,
+      version: '1',
+      chainId: 3,
+      nonce: 'aoeuhtns',
+    })
+    return message.prepareMessage()
+  }
+
+  const signInWithEthereum = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
+    await provider.send('eth_requestAccounts', [])
+
+    const signer = provider.getSigner()
+    signer.getAddress().then((address) => {
+      createSiweMessage(address, 'Sign in with Ethereum to the app.').then(
+        (message) => signer.signMessage(message)
       )
-    } else {
-      alert('Please install MetaMask')
-    }
+    })
   }
 
   return (
@@ -37,7 +48,7 @@ const Home = () => {
           <h1 className="flex-1 text-5xl font-light text-center">Samudai</h1>
           {!user.isLoggedIn ? (
             <button
-              onClick={requestAccount}
+              onClick={signInWithEthereum}
               className="inline-block px-6 py-4 mt-8 text-xl text-white transition bg-black rounded-full shadow-sm hover:shadow-lg"
             >
               Sign in with Ethereum
