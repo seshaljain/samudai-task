@@ -1,13 +1,10 @@
 import { Link } from 'react-router-dom'
 import { ethers } from 'ethers'
 import { SiweMessage } from 'siwe'
-import { useAppSelector, useAppDispatch } from '../app/hooks'
-
-import { save } from '../features/auth/authSlice'
+import { useAppSelector } from '../app/hooks'
 
 const Home = () => {
   const user = useAppSelector((state) => state.auth)
-  const dispatch = useAppDispatch()
 
   const createSiweMessage = async (address: string, statement: string) => {
     const domain = '0.0.0.0'

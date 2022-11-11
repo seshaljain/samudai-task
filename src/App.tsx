@@ -2,14 +2,13 @@ import { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ethers } from 'ethers'
 import { save } from './features/auth/authSlice'
-import { useAppDispatch, useAppSelector } from './app/hooks'
+import { useAppDispatch } from './app/hooks'
 
 import Home from './pages/Home'
 import Dashboard from './pages/Dashboard'
 import Statistics from './pages/Statistics'
 
 function App() {
-  const user = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
 
   const requestAccount = async () => {
