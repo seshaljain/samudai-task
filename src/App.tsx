@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ethers } from 'ethers'
-import { save } from './features/auth/authSlice'
 import { useAppDispatch } from './app/hooks'
+import { loadGapi } from './utils/gapi'
+
+import { save } from './features/auth/authSlice'
 
 import Home from './pages/Home'
 import Dashboard from './pages/Dashboard'
@@ -26,8 +28,9 @@ function App() {
 
   // TODO: add connect wallet modal instead of automatic connect request
   useEffect(() => {
+    loadGapi()
     requestAccount()
-  }, [])
+  })
 
   return (
     <div>

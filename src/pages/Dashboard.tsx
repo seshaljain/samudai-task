@@ -1,5 +1,4 @@
-import { useEffect, useState, SyntheticEvent } from 'react'
-import { loadGapiInsideDOM } from 'gapi-script'
+import { useState, SyntheticEvent } from 'react'
 import moment from 'moment'
 
 import Layout from '../components/Layout'
@@ -14,8 +13,6 @@ const GoogleAuth = () => {
   const googleLogin = async () => {
     const googleAuth = window.gapi.auth2.getAuthInstance()
     googleAuth.signIn().then(() => {
-      // const token = googleUser.getAuthResponse().id_token
-      // console.log(token)
       setGLoggedIn(true)
     })
   }
@@ -32,27 +29,8 @@ const GoogleAuth = () => {
   )
 }
 
-const loadGapi = () => {
-  loadGapiInsideDOM()
-
-  window.gapi.load('client', () => {
-    window.gapi.client.init({
-      clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID || '',
-      discoveryDocs: [
-        'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
-      ],
-      scope:
-        'https://www.googleapis.com/auth/calendar  https://www.googleapis.com/auth/userinfo.profile',
-    })
-  })
-}
-
 function Dashboard() {
   const [events, setEvents] = useState([])
-
-  useEffect(() => {
-    loadGapi()
-  }, [])
 
   const getCalendar = async () => {
     window.gapi.client.load('calendar', 'v3')
@@ -109,10 +87,10 @@ function Dashboard() {
   return (
     <Layout title="Dashboard">
       <article>
-        <div className="space-x-2">
+        <div className="-mx-2">
           <GoogleAuth />
           <button
-            className="p-2 font-bold text-white bg-green-600 rounded shadow"
+            className="p-2 m-2 font-bold text-white bg-green-600 rounded shadow"
             onClick={getCalendar}
           >
             Get Events
