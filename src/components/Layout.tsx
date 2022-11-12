@@ -1,8 +1,17 @@
 import { Link } from 'react-router-dom'
-import { useAppSelector } from '../app/hooks'
+import { useAppSelector, useAppDispatch } from '../app/hooks'
+
+import { clear } from '../features/auth/authSlice'
 
 const Layout = ({ title, children }: any) => {
+  const dispatch = useAppDispatch()
   const user = useAppSelector((state) => state.auth)
+
+  const logOut = () => {
+    console.log('Logout')
+    dispatch(clear())
+  }
+
   return (
     <>
       <main className="min-h-screen bg-green-50">
@@ -27,6 +36,14 @@ const Layout = ({ title, children }: any) => {
                 >
                   Statistics
                 </Link>
+              </li>
+              <li>
+                <button
+                  className="inline-block p-2 uppercase transition bg-green-300 rounded-md"
+                  onClick={logOut}
+                >
+                  Logout
+                </button>
               </li>
             </ul>
           </div>
