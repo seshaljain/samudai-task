@@ -1,46 +1,36 @@
-# Getting Started with Create React App
+# Samudai Task
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+This application features a Sign in with Ethereum flow built with [SiWE](https://www.npmjs.com/package/siwe) and [ethers](https://www.npmjs.com/package/ethers) in React + Redux.
 
-## Available Scripts
+## Vercel Deploy
 
-In the project directory, you can run:
+You can access the deployed project at <https://samudai-task.vercel.app>.
 
-### `yarn start`
+## Setup
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Make sure atleast the following environment variables are exposed (via .env)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```
+REACT_APP_ETHERSCAN_KEY=<KEY>
+REACT_APP_DOMAIN_ADDRESS=0.0.0.0
 
-### `yarn test`
+REACT_APP_GOOGLE_CLIENT_ID=<CLIEND_ID>
+REACT_APP_GOOGLE_PROJECT_ID=<PROJECT_ID>
+REACT_APP_GOOGLE_CLIENT_SECRET=<CLIENT_SECRET>
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Screenshots
 
-### `yarn build`
+### Landing Page
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![Logged out](https://user-images.githubusercontent.com/11702800/201490445-e45311da-399f-4d34-b6dd-74a6983fea1a.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![Logged in](https://user-images.githubusercontent.com/11702800/201490433-1b0c003a-4802-455b-b0f3-a901e85e30f2.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Dashboard Page
 
-### `yarn eject`
+![image](https://user-images.githubusercontent.com/11702800/201490502-481170d9-0ed3-44ab-9d50-11eda69a6bc8.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Statistics Page
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+![image](https://user-images.githubusercontent.com/11702800/201490522-2e08c0b9-70e1-4f09-a0c7-6ec529e7f1cb.png)
