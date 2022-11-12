@@ -10,7 +10,7 @@ const Home = () => {
   const user = useAppSelector((state) => state.auth)
 
   const createSiweMessage = async (address: string, statement: string) => {
-    const domain = '0.0.0.0'
+    const domain = process.env.REACT_APP_DOMAIN_ADDRESS || '0.0.0.0'
     const origin = window.location.origin
     const message = new SiweMessage({
       domain,
