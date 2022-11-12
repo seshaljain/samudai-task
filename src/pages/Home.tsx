@@ -29,11 +29,29 @@ const Home = () => {
     await provider.send('eth_requestAccounts', [])
 
     const signer = provider.getSigner()
-    signer.getAddress().then((address) => {
-      createSiweMessage(address, 'Sign in with Ethereum to the app.').then(
-        (message) => signer.signMessage(message)
-      )
+    signer.getAddress().then(async (address) => {
+      await createSiweMessage(
+        address,
+        'Sign in with Ethereum to the app.'
+      ).then((message) => signer.signMessage(message))
+
       dispatch(save({ address }))
+
+      await fetch('https://dev-gcn.samudai.xyz/api/member/demo/login', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+
+        body: JSON.stringify({
+          walletAddress: address,
+          chainId: 10,
+          member: {
+            did: 'aoeuhtns',
+          },
+        }),
+      })
     })
   }
 

@@ -8,7 +8,6 @@ const Layout = ({ title, children }: any) => {
   const user = useAppSelector((state) => state.auth)
 
   const logOut = () => {
-    console.log('Logout')
     dispatch(clear())
   }
 
