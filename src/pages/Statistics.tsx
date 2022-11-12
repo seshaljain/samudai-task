@@ -45,30 +45,37 @@ function Statistics() {
         <div className="justify-end">
           <h2 className="text-lg font-bold">Recent Transactions</h2>
           <p>Last 5 transactions</p>
-          <div className="my-4 space-y-4">
-            {transactions.slice(0, 4).map((t) => (
-              <div key={t.hash}>
-                <div>
-                  <h4 className="text-sm font-bold uppercase">Txn Hash</h4>
-                  <a
-                    href={`https://goerli.etherscan.io/tx/${t.hash}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {t.hash}
-                  </a>
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold uppercase">Value</h4>
-                  {ethers.utils.formatEther(t.value)}{' '}
-                  {ethers.constants.EtherSymbol}
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold uppercase">Block Number</h4>
-                  {t.blockNumber}
-                </div>
-              </div>
-            ))}
+          <div className="w-full max-w-full my-4 overflow-x-auto">
+            <table className="w-full overflow-x-auto">
+              <thead className="font-bold bg-gray-200">
+                <tr className="text-left">
+                  <th className="p-2">Transaction Hash</th>
+                  <th className="p-2">Value</th>
+                  <th className="p-2">Block Number</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions.slice(0, 4).map((t) => (
+                  <tr key={t.hash}>
+                    <td className="p-2 overflow-auto break-all text-ellipses">
+                      <a
+                        href={`https://goerli.etherscan.io/tx/${t.hash}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-blue-400"
+                      >
+                        {t.hash}
+                      </a>
+                    </td>
+                    <td className="p-2 overflow-auto break-all text-ellipses">
+                      {ethers.utils.formatEther(t.value)}{' '}
+                      {ethers.constants.EtherSymbol}
+                    </td>
+                    <td className="p-2">{t.blockNumber}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
         <div className="justify-self-end">

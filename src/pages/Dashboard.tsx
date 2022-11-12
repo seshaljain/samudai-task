@@ -8,20 +8,16 @@ const dateFormat = (d: string) => {
 }
 
 const GoogleAuth = () => {
-  const [gLoggedIn, setGLoggedIn] = useState(false)
-
   const googleLogin = async () => {
     const googleAuth = window.gapi.auth2.getAuthInstance()
-    googleAuth.signIn().then(() => {
-      setGLoggedIn(true)
-    })
+    await googleAuth.signIn()
   }
 
   return (
     <>
       <button
         onClick={googleLogin}
-        className={`inline-flex items-center px-4 py-2 font-bold text-white bg-green-600 rounded shadow`}
+        className={`inline-flex items-center px-4 py-2 font-bold text-white bg-green-600 rounded shadow m-2`}
       >
         Sign in to Google
       </button>
