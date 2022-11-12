@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom'
 import { ethers } from 'ethers'
 import { SiweMessage } from 'siwe'
-import { useAppSelector } from '../app/hooks'
+import { useAppDispatch, useAppSelector } from '../app/hooks'
+
+import { save } from '../features/auth/authSlice'
 
 const Home = () => {
+  const dispatch = useAppDispatch()
   const user = useAppSelector((state) => state.auth)
 
   const createSiweMessage = async (address: string, statement: string) => {
@@ -30,6 +33,7 @@ const Home = () => {
       createSiweMessage(address, 'Sign in with Ethereum to the app.').then(
         (message) => signer.signMessage(message)
       )
+      dispatch(save({ address }))
     })
   }
 

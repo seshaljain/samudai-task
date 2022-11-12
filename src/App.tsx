@@ -1,7 +1,12 @@
-import { useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { useEffect, useCallback } from 'react'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom'
 import { ethers } from 'ethers'
-import { useAppDispatch } from './app/hooks'
+import { useAppDispatch, useAppSelector } from './app/hooks'
 import { loadGapi } from './utils/gapi'
 
 import { save } from './features/auth/authSlice'
@@ -12,33 +17,42 @@ import Statistics from './pages/Statistics'
 
 function App() {
   const dispatch = useAppDispatch()
+  const user = useAppSelector((state) => state.auth)
 
-  const requestAccount = async () => {
+  const requestAccount = useCallback(async () => {
     if (window.ethereum) {
       const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
-      await provider.send('eth_requestAccounts', [])
-      const signer = provider.getSigner()
-      signer.getAddress().then((address) => {
-        dispatch(save({ address }))
-      })
+      const accounts = await provider.listAccounts()
+      if (accounts.length > 0) {
+        const signer = provider.getSigner()
+        signer.getAddress().then((address) => {
+          dispatch(save({ address }))
+        })
+      }
     } else {
       console.error('Please install Metamask.')
     }
-  }
+  }, [dispatch])
 
   // TODO: add connect wallet modal instead of automatic connect request
   useEffect(() => {
     loadGapi()
     requestAccount()
-  })
+  }, [requestAccount])
 
   return (
     <div>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/statistics" element={<Statistics />} />
+          <Route
+            path="/dashboard"
+            element={user.isLoggedIn ? <Dashboard /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/statistics"
+            element={user.isLoggedIn ? <Statistics /> : <Navigate to="/" />}
+          />
         </Routes>
       </Router>
     </div>
